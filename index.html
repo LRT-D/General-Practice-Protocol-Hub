@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
-    <script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
-<script src="https://files.bpcontent.cloud/2026/06/15/09/20260615095016-H1PGE6UF.js" defer></script>
-    
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Practice Protocol Hub</title>
@@ -313,6 +309,187 @@
         min-height: auto;
       }
     }
+
+    .social-card {
+      margin-top: 24px;
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .social-intro {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .social-intro p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      max-width: 720px;
+    }
+
+    .social-count {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--surface-soft);
+      color: var(--primary-dark);
+      font-weight: 700;
+      white-space: nowrap;
+      font-size: 0.92rem;
+    }
+
+    .social-tools {
+      display: grid;
+      grid-template-columns: 1fr 220px;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .social-tools select {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 15px;
+      font-size: 1rem;
+      color: var(--text);
+      outline: none;
+      background: #fbfdfe;
+    }
+
+    .social-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 410px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .social-table-wrap {
+      max-height: 540px;
+      overflow: auto;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: #ffffff;
+    }
+
+    .social-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.94rem;
+    }
+
+    .social-table th,
+    .social-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .social-table th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: var(--surface-soft);
+      color: var(--primary-dark);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .social-table tr {
+      cursor: pointer;
+    }
+
+    .social-table tbody tr:hover,
+    .social-table tbody tr.active {
+      background: #f3fafb;
+    }
+
+    .social-map-panel {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .map-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+      background: #fbfdfe;
+    }
+
+    .map-header strong {
+      display: block;
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+
+    .map-header span {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .map-frame {
+      width: 100%;
+      height: 360px;
+      border: 0;
+      display: block;
+      background: var(--surface-soft);
+    }
+
+    .map-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 14px 16px 16px;
+    }
+
+    .map-actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--primary-dark);
+      font-weight: 700;
+      background: #ffffff;
+    }
+
+    .source-note {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 960px) {
+      .social-layout,
+      .social-tools {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .social-card {
+        padding: 20px;
+      }
+
+      .social-intro {
+        flex-direction: column;
+      }
+
+      .social-table {
+        min-width: 760px;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -388,6 +565,72 @@
           </a>
         </div>
       </section>
+
+      <section class="social-card" aria-labelledby="social-title">
+        <div class="social-intro">
+          <div>
+            <h2 class="section-title" id="social-title">Sociale kaart</h2>
+            <p>
+              Zoek snel hulpverleners in de buurt op discipline, naam of adres. Klik op een rij om de locatie op de kaart te tonen.
+            </p>
+          </div>
+          <div class="social-count"><span id="social-result-count">58</span> contacten</div>
+        </div>
+
+        <div class="social-tools">
+          <div>
+            <label for="social-search">Zoeken in sociale kaart</label>
+            <input id="social-search" type="search" placeholder="Zoek op naam, discipline, adres, e-mail of telefoon" />
+          </div>
+          <div>
+            <label for="discipline-filter">Discipline</label>
+            <select id="discipline-filter">
+              <option value="all">Alle disciplines</option><option value="Diëtist">Diëtist</option><option value="Kinesitherapie">Kinesitherapie</option><option value="Psychologen">Psychologen</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="social-layout">
+          <div class="social-table-wrap" aria-label="Tabel sociale kaart">
+            <table class="social-table">
+              <thead>
+                <tr>
+                  <th>Discipline</th>
+                  <th>Naam/praktijk</th>
+                  <th>Adres</th>
+                  <th>Contact</th>
+                </tr>
+              </thead>
+              <tbody id="social-table-body"></tbody>
+            </table>
+          </div>
+
+          <aside class="social-map-panel" aria-label="Interactieve kaart">
+            <div class="map-header">
+              <strong id="selected-provider-name">Selecteer een hulpverlener</strong>
+              <span id="selected-provider-address">Klik op een rij in de tabel om de kaart te openen.</span>
+            </div>
+            <iframe
+              id="provider-map"
+              class="map-frame"
+              title="Kaart met geselecteerde hulpverlener"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps?q=Antwerpen%2C%20Belgi%C3%AB&output=embed">
+            </iframe>
+            <div class="map-actions">
+              <a id="open-map-link" href="https://www.google.com/maps?q=Antwerpen%2C%20Belgi%C3%AB" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
+              <a id="email-link" href="#" aria-disabled="true">E-mail</a>
+              <a id="phone-link" href="#" aria-disabled="true">Telefoon</a>
+            </div>
+          </aside>
+        </div>
+
+        <p class="source-note">
+          Bron: gegevens uit de toegevoegde Excel. Voor een kaart met alle hulpverleners tegelijk als pinnen zijn exacte GPS-coördinaten nodig; die kunnen later als extra kolommen worden toegevoegd.
+        </p>
+      </section>
+
     </main>
 
     <footer class="footer-card">
@@ -429,6 +672,113 @@
         }
       });
     });
+
+    const socialeKaartData = [{"Discipline": "Kinesitherapie", "Naam praktijk": "Catherine Detavernier", "Adres": "Delacenseriestraat 14 bus 704, 2018 Antwerpen", "Email": "catherine_detavernier@hotmail.com", "Telefoon": "0472 62 52 46"}, {"Discipline": "Kinesitherapie", "Naam praktijk": "Raoul Reichman", "Adres": "Quinten Matsijslei 17 bus 18, 2018 Antwerpen", "Email": "raoul.reichman@skynet.be", "Telefoon": "0475 72 28 53"}, {"Discipline": "Kinesitherapie", "Naam praktijk": "Eric Schenck", "Adres": "Neptunusstraat 14, 2600 Berchem", "Email": "eric.schenck@skynet.be", "Telefoon": "0475 32 05 59"}, {"Discipline": "Kinesitherapie", "Naam praktijk": "Philip Van Kolen", "Adres": "Korte Lozanastraat 10, 2018 Antwerpen", "Email": "philipvankolen@skynet.be", "Telefoon": "03 238 61 64"}, {"Discipline": "Kinesitherapie", "Naam praktijk": "Hans De Laet", "Adres": "Stanleystraat 19, 2018 Antwerpen", "Email": "hans.delaet@telenet.be", "Telefoon": "03 239 17 44"}, {"Discipline": "Kinesitherapie", "Naam praktijk": "KineBalance", "Adres": "Ballaarstraat 76, 2018 Antwerpen", "Email": "kristien@kinebalance.be", "Telefoon": "0497 54 22 89"}, {"Discipline": "Kinesitherapie", "Naam praktijk": "Kinebelair", "Adres": "Diksmuidelaan 281, 2600 Berchem", "Email": "info@kinebelair.be", "Telefoon": "03 336 01 95"}, {"Discipline": "Kinesitherapie", "Naam praktijk": "KineMatic", "Adres": "Begijnenstraat 56, 2000 Antwerpen", "Email": "info@kinematic.be", "Telefoon": "03 233 03 89"}, {"Discipline": "Kinesitherapie", "Naam praktijk": "Kine2060", "Adres": "Sint-Gummarusstraat 24, 2060 Antwerpen", "Email": "kine.camerlynck@skynet.be", "Telefoon": "03 231 44 46"}, {"Discipline": "Kinesitherapie", "Naam praktijk": "Fysiolab", "Adres": "Desguinlei 17, 2018 Antwerpen", "Email": "info@fysiolab.be", "Telefoon": "03 808 05 08"}, {"Discipline": "Kinesitherapie", "Naam praktijk": "Osteoworks", "Adres": "Van Schoonbekestraat, 2018 Antwerpen", "Email": "osteoworks.ceb@gmail.com", "Telefoon": ""}, {"Discipline": "Kinesitherapie", "Naam praktijk": "Kineleft", "Adres": "Frederik van Eedenplein 17, 2050 Antwerpen", "Email": "kineleft@gmail.com", "Telefoon": ""}, {"Discipline": "Kinesitherapie", "Naam praktijk": "Kinekaai", "Adres": "Sint-Michielstraat 5, 2000 Antwerpen", "Email": "info@kinekaai.be", "Telefoon": "03 232 91 44"}, {"Discipline": "Kinesitherapie", "Naam praktijk": "Praktijk Funktionals", "Adres": "Vleminckstraat 10, 2000 Antwerpen", "Email": "kinesist@funktionals.be", "Telefoon": "0495 88 81 09"}, {"Discipline": "Kinesitherapie", "Naam praktijk": "Kine Jasmien", "Adres": "De Lescluzestraat 53, 2600 Berchem", "Email": "contact@kinejasmien.be", "Telefoon": "0498 85 34 71"}, {"Discipline": "Kinesitherapie", "Naam praktijk": "Peter Goossens", "Adres": "Jos Smolderenstraat 46, 2000 Antwerpen", "Email": "pml.goossens@telenet.be", "Telefoon": "0495 57 64 67"}, {"Discipline": "Kinesitherapie", "Naam praktijk": "Praktijk KineXpert", "Adres": "Beatrijslaan 20, 2050 Antwerpen", "Email": "info@kinexpert.be", "Telefoon": "0473 54 21 00"}, {"Discipline": "Kinesitherapie", "Naam praktijk": "Praktijk Corpus", "Adres": "Raapstraat 15, 2000 Antwerpen", "Email": "info@praktijkcorpus.be", "Telefoon": "03 231 54 01"}, {"Discipline": "Kinesitherapie", "Naam praktijk": "Praktijk Twist", "Adres": "Vredestraat 93, 2600 Berchem", "Email": "cathy@praktijktwist.be", "Telefoon": "0472 37 72 89"}, {"Discipline": "Kinesitherapie", "Naam praktijk": "Impuls groepspraktijk", "Adres": "Lange Lozanastraat 145, 2018 Antwerpen", "Email": "info@impuls-groepspraktijk.be", "Telefoon": "03 295 54 40"}, {"Discipline": "Diëtist", "Naam praktijk": "Diëtiste Cato", "Adres": "Korte Klarenstraat 9A, 2000 Antwerpen", "Email": "dietistecato@gmail.com", "Telefoon": ""}, {"Discipline": "Diëtist", "Naam praktijk": "Diëtiste Charlotte Aarts", "Adres": "Fruithoflaan 32, 2600 Berchem", "Email": "info@dietiste-charlotte.be", "Telefoon": "0485 41 56 54"}, {"Discipline": "Diëtist", "Naam praktijk": "Diëtiste Naomi Voets", "Adres": "August Vermeylenlaan 2, 2050 Antwerpen", "Email": "info@dietiste-naomi.be", "Telefoon": "0477 18 86 28"}, {"Discipline": "Diëtist", "Naam praktijk": "Nourish", "Adres": "Leopold de Waelstraat 33, 2000 Antwerpen", "Email": "dietiste.rafaelle@gmail.com", "Telefoon": "0497 65 92 89"}, {"Discipline": "Diëtist", "Naam praktijk": "Het Diëtistencollectief", "Adres": "Jan Blockxstraat 26, 2018 Antwerpen", "Email": "delvauxkwinten@gmail.com", "Telefoon": "0471 39 28 16"}, {"Discipline": "Diëtist", "Naam praktijk": "BIBI Fitstudio", "Adres": "Mechelsesteenweg 271, 2820 Bonheiden", "Email": "hello@bibifitstudio.be", "Telefoon": ""}, {"Discipline": "Diëtist", "Naam praktijk": "Mouha Sanne", "Adres": "Weidestraat 37, 2600 Berchem", "Email": "info@sannemouha.be", "Telefoon": "0494 92 45 92"}, {"Discipline": "Diëtist", "Naam praktijk": "Dieetcentrum Antwerpen", "Adres": "Magdalenastraat 55 bus 005, 2018 Antwerpen", "Email": "zohra.daems@outlook.com", "Telefoon": "0496 81 17 18"}, {"Discipline": "Diëtist", "Naam praktijk": "Diëtisten Antwerpen", "Adres": "Lange Dijkstraat 8, 2060 Antwerpen", "Email": "jan@janlodewijks.be", "Telefoon": "03 808 59 59"}, {"Discipline": "Diëtist", "Naam praktijk": "Laure Brandon", "Adres": "Fruithoflaan 38 bus 7, 2600 Berchem", "Email": "laure_brandon@hotmail.com", "Telefoon": "0486 79 39 78"}, {"Discipline": "Diëtist", "Naam praktijk": "De Voedingsbrug", "Adres": "Beukenlaan 124, 2850 Boom", "Email": "info@devoedingsbrug.be", "Telefoon": "0497 414 554"}, {"Discipline": "Diëtist", "Naam praktijk": "Groepspraktijk Eetstudio", "Adres": "Welvaartstraat 23 bus 1, 2000 Antwerpen", "Email": "info@eetstudio.be", "Telefoon": ""}, {"Discipline": "Diëtist", "Naam praktijk": "Groepspraktijk Fiks", "Adres": "Fruithoflaan 32, 2600 Berchem", "Email": "info@fiksgroepspraktijk.be", "Telefoon": "03 689 93 44"}, {"Discipline": "Diëtist", "Naam praktijk": "Ria Vanderstraeten (Sports Nutrition Consultancy)", "Adres": "Galgenberglaan 11, 9070 Destelbergen", "Email": "ria.vanderstraeten@sportsnutritionconsultancy.be", "Telefoon": "0474 46 26 85"}, {"Discipline": "Diëtist", "Naam praktijk": "Huisartsenpraktijk Van Eeden", "Adres": "Frederik van Eedenplein 16 bus 4, 2050 Antwerpen", "Email": "", "Telefoon": "03 219 68 25"}, {"Discipline": "Diëtist", "Naam praktijk": "Forward", "Adres": "Vorstermanstraat 6, 2000 Antwerpen", "Email": "info@forwardcoaching.be", "Telefoon": "03 237 35 78"}, {"Discipline": "Diëtist", "Naam praktijk": "Huisartsengroep Plantijn", "Adres": "Bosduifstraat 32, 2018 Antwerpen", "Email": "secretariaat@huisartsengroepplantijn.be", "Telefoon": "03 272 35 35"}, {"Discipline": "Diëtist", "Naam praktijk": "Huisartsen Antigoon", "Adres": "Klapdorp 22A, 2000 Antwerpen", "Email": "praktijk@antigoonartsen.be", "Telefoon": "03 232 86 77"}, {"Discipline": "Psychologen", "Naam praktijk": "Sigrid Vandepitte", "Adres": "Markgravelei 124, 2018 Antwerpen", "Email": "", "Telefoon": ""}, {"Discipline": "Psychologen", "Naam praktijk": "Psycholoog Haddouti", "Adres": "Tabakvest 87, 2000 Antwerpen", "Email": "saliha@psycholooghaddouti.be", "Telefoon": "0490 22 14 99"}, {"Discipline": "Psychologen", "Naam praktijk": "Psychologie Fien Billion", "Adres": "Floraliënlaan 449, 2600 Berchem", "Email": "", "Telefoon": "0476 02 17 10"}, {"Discipline": "Psychologen", "Naam praktijk": "Doolaege Maaike", "Adres": "Tabakvest 87, 2000 Antwerpen", "Email": "praktijk.ipo@gmail.com", "Telefoon": "0475 64 08 99"}, {"Discipline": "Psychologen", "Naam praktijk": "Reflexio", "Adres": "Edward Pecherstraat 24, 2000 Antwerpen", "Email": "info@reflexio.be", "Telefoon": "0472 48 58 72"}, {"Discipline": "Psychologen", "Naam praktijk": "Element", "Adres": "Fruithoflaan 26 bus 14, 2600 Berchem", "Email": "info@praktijkelement.be", "Telefoon": "0468 01 54 74"}, {"Discipline": "Psychologen", "Naam praktijk": "Contextpsycho", "Adres": "Lange Schipperskapelstraat 3 bus 2, 2000 Antwerpen", "Email": "info@contextpsycho.be", "Telefoon": "0486 55 39 87"}, {"Discipline": "Psychologen", "Naam praktijk": "Lieve Verboven", "Adres": "Oudeleeuwenrui 34c, 2000 Antwerpen", "Email": "lieve.therapie@gmail.com", "Telefoon": "0486 71 98 52"}, {"Discipline": "Psychologen", "Naam praktijk": "De Huispsycholoog", "Adres": "Grotesteenweg 93, 2600 Berchem", "Email": "tine@dehuispsycholoog.be", "Telefoon": ""}, {"Discipline": "Psychologen", "Naam praktijk": "Praktijk Prisma", "Adres": "Fruithoflaan 93, 2600 Berchem", "Email": "info@praktijkprisma.be", "Telefoon": ""}, {"Discipline": "Psychologen", "Naam praktijk": "Daglinde Masure", "Adres": "Guldenvliesstraat 20, 2600 Berchem", "Email": "masuredaglinde@gmail.com", "Telefoon": "0497 12 27 57"}, {"Discipline": "Psychologen", "Naam praktijk": "Anne Dubois", "Adres": "Fruithoflaan 29 bus 202, 2600 Berchem", "Email": "afornovilledubois@hotmail.com", "Telefoon": "0495 67 13 84"}, {"Discipline": "Psychologen", "Naam praktijk": "Karin Tilmans", "Adres": "Fruithoflaan 56 bus 6, 2600 Berchem", "Email": "ktilmans@telenet.be", "Telefoon": "0491 93 57 05"}, {"Discipline": "Psychologen", "Naam praktijk": "Het wolkt", "Adres": "Tolstraat 22, 2000 Antwerpen", "Email": "info@hetwolkt.be", "Telefoon": "0475 36 46 31"}, {"Discipline": "Psychologen", "Naam praktijk": "Herman Van Eyndt", "Adres": "Frans Halsplein 17 bus 22, 2000 Antwerpen", "Email": "", "Telefoon": "03 227 07 42"}, {"Discipline": "Psychologen", "Naam praktijk": "Psychologenpraktijk Kaai 9", "Adres": "Vlaamsekaai 9, 2000 Antwerpen", "Email": "groepspraktijk@kaai9.be", "Telefoon": ""}, {"Discipline": "Psychologen", "Naam praktijk": "Groepspraktijk De Mens", "Adres": "Eekhoekstraat 82B, 9270 Laarne", "Email": "contact@groepspraktijkdemens.be", "Telefoon": "0486 80 39 35"}, {"Discipline": "Psychologen", "Naam praktijk": "Praktijk voor psychotherapie", "Adres": "Willem Klooslaan 6 bus 6, 2050 Antwerpen", "Email": "info@jk2.be", "Telefoon": "03 236 89 88"}, {"Discipline": "Psychologen", "Naam praktijk": "Bie Van Lishout", "Adres": "Piraeusstraat 12 bus 102, 2000 Antwerpen", "Email": "bie@bievanlishout.be", "Telefoon": "0475 62 70 35"}, {"Discipline": "Psychologen", "Naam praktijk": "Multidisciplinaire praktijk Psycon", "Adres": "Flor Alpaertsstraat 16, 2600 Berchem", "Email": "philippe@psycon.be", "Telefoon": ""}];
+    const socialSearch = document.getElementById("social-search");
+    const disciplineFilter = document.getElementById("discipline-filter");
+    const socialTableBody = document.getElementById("social-table-body");
+    const socialResultCount = document.getElementById("social-result-count");
+    const providerMap = document.getElementById("provider-map");
+    const selectedProviderName = document.getElementById("selected-provider-name");
+    const selectedProviderAddress = document.getElementById("selected-provider-address");
+    const openMapLink = document.getElementById("open-map-link");
+    const emailLink = document.getElementById("email-link");
+    const phoneLink = document.getElementById("phone-link");
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function mapUrl(address) {
+      return "https://www.google.com/maps?q=" + encodeURIComponent(address || "Antwerpen, België");
+    }
+
+    function embedMapUrl(address) {
+      return mapUrl(address) + "&output=embed";
+    }
+
+    function selectProvider(provider, row) {
+      document.querySelectorAll(".social-table tbody tr").forEach(function (tr) {
+        tr.classList.remove("active");
+      });
+      if (row) row.classList.add("active");
+
+      selectedProviderName.textContent = provider["Naam praktijk"] || "Hulpverlener";
+      selectedProviderAddress.textContent = provider.Adres || "Adres niet beschikbaar";
+
+      providerMap.src = embedMapUrl(provider.Adres);
+      openMapLink.href = mapUrl(provider.Adres);
+
+      if (provider.Email) {
+        emailLink.href = "mailto:" + provider.Email;
+        emailLink.textContent = "E-mail";
+        emailLink.removeAttribute("aria-disabled");
+      } else {
+        emailLink.href = "#";
+        emailLink.textContent = "Geen e-mail";
+        emailLink.setAttribute("aria-disabled", "true");
+      }
+
+      if (provider.Telefoon) {
+        phoneLink.href = "tel:" + provider.Telefoon.replace(/\s+/g, "");
+        phoneLink.textContent = "Bel";
+        phoneLink.removeAttribute("aria-disabled");
+      } else {
+        phoneLink.href = "#";
+        phoneLink.textContent = "Geen telefoon";
+        phoneLink.setAttribute("aria-disabled", "true");
+      }
+    }
+
+    function renderSocialTable() {
+      const query = socialSearch.value.trim().toLowerCase();
+      const discipline = disciplineFilter.value;
+
+      const filtered = socialeKaartData.filter(function (provider) {
+        const text = Object.values(provider).join(" ").toLowerCase();
+        const matchesSearch = !query || text.includes(query);
+        const matchesDiscipline = discipline === "all" || provider.Discipline === discipline;
+        return matchesSearch && matchesDiscipline;
+      });
+
+      socialResultCount.textContent = filtered.length;
+      socialTableBody.innerHTML = "";
+
+      filtered.forEach(function (provider, index) {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${escapeHtml(provider.Discipline)}</td>
+          <td><strong>${escapeHtml(provider["Naam praktijk"])}</strong></td>
+          <td>${escapeHtml(provider.Adres)}</td>
+          <td>
+            ${provider.Email ? `<a href="mailto:${escapeHtml(provider.Email)}">${escapeHtml(provider.Email)}</a>` : "—"}<br>
+            ${provider.Telefoon ? `<a href="tel:${escapeHtml(provider.Telefoon).replace(/\s+/g, "")}">${escapeHtml(provider.Telefoon)}</a>` : "—"}
+          </td>
+        `;
+        row.addEventListener("click", function () {
+          selectProvider(provider, row);
+        });
+        socialTableBody.appendChild(row);
+
+        if (index === 0) {
+          selectProvider(provider, row);
+        }
+      });
+
+      if (filtered.length === 0) {
+        socialTableBody.innerHTML = '<tr><td colspan="4">Geen resultaten gevonden.</td></tr>';
+      }
+    }
+
+    socialSearch.addEventListener("input", renderSocialTable);
+    disciplineFilter.addEventListener("change", renderSocialTable);
+    renderSocialTable();
+
   </script>
 </body>
 </html>
