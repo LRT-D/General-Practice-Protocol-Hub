@@ -348,7 +348,7 @@
         <h2 class="section-title" id="protocols-title">Protocols</h2>
 
         <div class="protocol-grid" id="protocol-list">
-          <a class="protocol-card" href="https://github.com/LRT-D/General-Practice-Protocol-Hub/blob/main/Voorbeeldprotocol%20-%20Diabetes%20zorgtraject.pdf" target="_blank" rel="noopener noreferrer" data-title="Diabetes" data-keywords="diabetes nurse third consultation glycaemia lifestyle medication follow-up">
+          <a class="protocol-card" href="https://github.com/LRT-D/General-Practice-Protocol-Hub/blob/main/Voorbeeldprotocol%20-%20Diabetes%20zorgtraject.pdf" target="_blank" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" data-title="Diabetes" data-keywords="diabetes nurse third consultation glycaemia lifestyle medication follow-up">
             <div class="protocol-icon">D</div>
             <h2>Diabetes</h2>
             <p>Care pathway and consultation tasks for diabetes follow-up.</p>
@@ -413,7 +413,9 @@
 
     cards.forEach(function (card) {
       card.addEventListener("click", function (event) {
-        if (card.getAttribute("href") === "#") {
+        const href = card.getAttribute("href");
+
+        if (!href || href === "#") {
           event.preventDefault();
           alert("Protocol document link will be added later.");
         }
