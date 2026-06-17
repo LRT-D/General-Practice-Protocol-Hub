@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
-<script src="https://files.bpcontent.cloud/2026/06/15/09/20260615095016-H1PGE6UF.js" defer></script>
+    <script src="https://files.bpcontent.cloud/2026/06/15/09/20260615095016-H1PGE6UF.js" defer></script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Practice Protocol Hub</title>
@@ -532,6 +533,47 @@
       }
     }
 
+    .feedback-card {
+      margin-top: 24px;
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .feedback-card p {
+      margin: 6px 0 18px;
+      color: var(--muted);
+      max-width: 780px;
+    }
+
+    .feedback-form-wrap {
+      width: 100%;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: #ffffff;
+    }
+
+    .feedback-form-wrap iframe {
+      display: block;
+      width: 100%;
+      min-height: 1022px;
+      border: 0;
+      background: #ffffff;
+    }
+
+    @media (max-width: 620px) {
+      .feedback-card {
+        padding: 20px;
+      }
+
+      .feedback-form-wrap iframe {
+        min-height: 1120px;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -669,6 +711,17 @@
         <p class="source-note">
           Bron: gegevens uit de Excel. Coördinaten worden geladen via de Geolocation Service van Digitaal Vlaanderen wanneer de pagina opent. Rijen zonder adres krijgen geen pin.
         </p>
+      </section>
+
+      <section class="feedback-card" aria-labelledby="feedback-title">
+        <h2 class="section-title" id="feedback-title">Feedback</h2>
+        <p>
+          Gebruik dit formulier om fouten, ontbrekende informatie, suggesties of problemen met protocollen, sociale kaart of chatbot te melden.
+        </p>
+
+        <div class="feedback-form-wrap">
+          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdWvRC8ctLndR2jdx7FxfdDNk82gnMoLspArcsJ3S0IMvASIQ/viewform?embedded=true" width="640" height="1022" frameborder="0" marginheight="0" marginwidth="0">Laden…</iframe>
+        </div>
       </section>
 
     </main>
