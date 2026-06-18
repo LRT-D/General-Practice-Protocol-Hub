@@ -1,8 +1,6 @@
 <!doctype html>
 <html lang="nl">
 <head>
-      <script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
-    <script src="https://files.bpcontent.cloud/2026/06/15/09/20260615095016-H1PGE6UF.js" defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Protocol: zorgtraject diabetes</title>
@@ -36,18 +34,21 @@
     .eyebrow { font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #c7edf6; font-size: .85rem; }
     h1 { font-size: clamp(2.1rem, 5vw, 4.5rem); line-height: .98; margin: .35rem 0 1rem; }
     .subtitle { font-size: clamp(1.05rem, 1.8vw, 1.35rem); max-width: 760px; color: #edf9fc; }
+    .hero-actions { margin-top: 1.4rem; display: flex; flex-wrap: wrap; gap: .75rem; }
+    .hub-button { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.65); color: #fff; }
+    .hub-button:hover, .hub-button:focus { background: #fff; color: #0e5c75; }
     .meta-card { position: relative; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.24); border-radius: 1.25rem; padding: 1.25rem; backdrop-filter: blur(10px); }
     .meta-card dl { margin: 0; display: grid; gap: .75rem; }
     .meta-card dt { font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: #c7edf6; }
     .meta-card dd { margin: .15rem 0 0; font-weight: 700; }
     .meta-action { margin: 1.1rem 0 0; }
     .meta-button { background: #fff; color: #0e5c75; border-color: #fff; text-align: center; }
-    .meta-button:hover, .meta-button:focus { background: #e9f5f8; color: #0b5265; }
     @media (min-width: 901px) {
       .meta-card { padding-right: 13.25rem; }
-      .meta-action { position: absolute; right: 1.25rem; bottom: 1.25rem; margin: 0; width: 10.75rem; }
+      .meta-action { position: absolute; right: 1.25rem; top: 50%; transform: translateY(-50%); margin: 0; width: 10.75rem; }
       .meta-button { padding: .65rem .8rem; font-size: .9rem; line-height: 1.2; }
     }
+    .meta-button:hover, .meta-button:focus { background: #e9f5f8; color: #0b5265; }
     nav { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
     nav .wrap { display: flex; gap: .5rem; overflow-x: auto; padding: .75rem 1rem; }
     nav a { white-space: nowrap; text-decoration: none; color: var(--ink); padding: .55rem .8rem; border-radius: 999px; font-weight: 650; font-size: .95rem; }
@@ -112,6 +113,7 @@
         <div class="eyebrow">Huisartsenpraktijk · protocol</div>
         <h1>Zorgtraject diabetes</h1>
         <p class="subtitle">Interactieve, webvriendelijke versie van het praktijkprotocol voor de opvolging van patiënten met diabetes mellitus type 2 binnen het zorgtraject.</p>
+        <p class="hero-actions"><a class="button hub-button" href="https://lrt-d.github.io/General-Practice-Protocol-Hub/">← Terug naar protocol-hub</a></p>
       </div>
       <aside class="meta-card" aria-label="Documentgegevens">
         <dl>
