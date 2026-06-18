@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Protocol: zorgtraject diabetes</title>
+  <meta name="description" content="Interactieve HTML-versie van een diabetesprotocol voor de huisartsenpraktijk.">
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #5b6875;
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --brand: #0f6b83;
+      --brand-2: #e86f2b;
+      --soft: #e9f5f8;
+      --green: #dff3d8;
+      --orange: #fde3d3;
+      --red: #ffd6d6;
+      --line: #d7dee7;
+      --shadow: 0 12px 30px rgba(17, 24, 39, .08);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: var(--bg); line-height: 1.55; }
+    a { color: var(--brand); }
+    .button { display: inline-block; text-decoration: none; background: var(--brand); color: #fff; padding: .75rem 1rem; border-radius: 999px; font-weight: 800; border: 1px solid var(--brand); }
+    .button:hover, .button:focus { background: #0b5265; color: #fff; }
+    .skip { position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden; }
+    .skip:focus { left: 1rem; top: 1rem; width:auto; height:auto; padding:.75rem 1rem; background:#fff; z-index:99; border:2px solid var(--brand); border-radius:.6rem; }
+    header.hero { background: radial-gradient(circle at 15% 20%, rgba(255,255,255,.28), transparent 26%), linear-gradient(135deg, #0e5c75 0%, #0b7892 58%, #16425b 100%); color: white; padding: 3.5rem 1.25rem 2rem; }
+    .wrap { width: min(1180px, calc(100% - 2rem)); margin: 0 auto; }
+    .hero-grid { display: grid; gap: 1.75rem; grid-template-columns: 1.3fr .7fr; align-items: end; }
+    .eyebrow { font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #c7edf6; font-size: .85rem; }
+    h1 { font-size: clamp(2.1rem, 5vw, 4.5rem); line-height: .98; margin: .35rem 0 1rem; }
+    .subtitle { font-size: clamp(1.05rem, 1.8vw, 1.35rem); max-width: 760px; color: #edf9fc; }
+    .meta-card { position: relative; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.24); border-radius: 1.25rem; padding: 1.25rem; backdrop-filter: blur(10px); }
+    .meta-card dl { margin: 0; display: grid; gap: .75rem; }
+    .meta-card dt { font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: #c7edf6; }
+    .meta-card dd { margin: .15rem 0 0; font-weight: 700; }
+    .meta-action { margin: 1.1rem 0 0; }
+    .meta-button { background: #fff; color: #0e5c75; border-color: #fff; text-align: center; }
+    .meta-button:hover, .meta-button:focus { background: #e9f5f8; color: #0b5265; }
+    @media (min-width: 901px) {
+      .meta-card { padding-right: 13.25rem; }
+      .meta-action { position: absolute; right: 1.25rem; bottom: 1.25rem; margin: 0; width: 10.75rem; }
+      .meta-button { padding: .65rem .8rem; font-size: .9rem; line-height: 1.2; }
+    }
+    nav { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+    nav .wrap { display: flex; gap: .5rem; overflow-x: auto; padding: .75rem 1rem; }
+    nav a { white-space: nowrap; text-decoration: none; color: var(--ink); padding: .55rem .8rem; border-radius: 999px; font-weight: 650; font-size: .95rem; }
+    nav a:hover, nav a:focus { background: var(--soft); color: var(--brand); }
+    main { padding: 2rem 0 4rem; }
+    section { margin: 0 0 2rem; scroll-margin-top: 5rem; }
+    .section-title { display:flex; gap:.75rem; align-items:center; margin: 0 0 1rem; }
+    .section-title span { width: .75rem; height: .75rem; background: var(--brand-2); border-radius: 50%; flex: none; }
+    h2 { font-size: clamp(1.6rem, 3vw, 2.25rem); margin: 0; color: #12364a; }
+    h3 { margin: 1.1rem 0 .55rem; color: #11485c; }
+    .grid { display: grid; gap: 1rem; }
+    .grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 1.1rem; padding: 1.25rem; box-shadow: var(--shadow); }
+    .card p:first-child { margin-top: 0; }
+    .card p:last-child { margin-bottom: 0; }
+    .taglist { display: flex; flex-wrap: wrap; gap: .55rem; padding: 0; list-style: none; margin: .75rem 0 0; }
+    .taglist li { background: var(--soft); color: #0f5167; border: 1px solid #cce7ee; border-radius: 999px; padding: .35rem .65rem; font-weight: 650; }
+    .timeline { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+    .step { position: relative; border-top: 5px solid var(--brand); }
+    .step .month { font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-weight: 800; }
+    .step .role { display: inline-flex; margin: .6rem 0; padding: .2rem .55rem; border-radius: 999px; background: var(--orange); font-weight: 750; color: #863600; }
+    details { border: 1px solid var(--line); background: #fff; border-radius: 1rem; overflow: hidden; box-shadow: var(--shadow); }
+    details + details { margin-top: .85rem; }
+    summary { cursor: pointer; padding: 1rem 1.15rem; font-weight: 800; color: #12364a; background: #fbfdfe; }
+    summary.section-summary { display:flex; gap:.75rem; align-items:center; font-size: 1rem; }
+    summary.section-summary span { width: .75rem; height: .75rem; background: var(--brand-2); border-radius: 50%; flex: none; }
+    summary.section-summary h2 { margin: 0; color: var(--brand); }
+    .detail-body { padding: .25rem 1.15rem 1.15rem; }
+    ul.checks { padding-left: 1.2rem; }
+    ul.checks li { margin-bottom: .35rem; }
+    table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 1rem; overflow: hidden; box-shadow: var(--shadow); }
+    caption { text-align: left; font-weight: 800; padding: .5rem 0; color: #12364a; }
+    th, td { border: 1px solid var(--line); padding: .75rem; vertical-align: top; text-align: left; }
+    th { background: #e4eef8; color: #102f41; }
+    .goal { background: var(--green); }
+    .orange { background: var(--orange); }
+    .red { background: var(--red); }
+    .process th:nth-child(2), .process td:nth-child(2) { background: #f7c7ad; }
+    .process th:nth-child(3), .process td:nth-child(3) { background: var(--green); }
+    .process th:nth-child(4), .process td:nth-child(4) { background: #efd0ec; }
+    .note { border-left: 5px solid var(--brand-2); background: #fff8f3; padding: 1rem; border-radius: .8rem; }
+    .footer { color: var(--muted); font-size: .9rem; padding: 2rem 0; border-top: 1px solid var(--line); }
+    .toc-list { columns: 2; padding-left: 1.2rem; }
+    .table-wrap { overflow-x: auto; border-radius: 1rem; }
+    .steekkaart-table th { text-align: center; }
+    .steekkaart-table td:first-child { font-weight: 800; background: #eef5fb; min-width: 150px; }
+    .steekkaart-table ul { margin: 0; padding-left: 1.1rem; }
+    .steekkaart-table li { margin-bottom: .25rem; }
+    .contact-pair { display: grid; grid-template-columns: 1.3fr .7fr; gap: 1rem; align-items: start; }
+    .subcard { border: 1px solid var(--line); border-radius: .9rem; padding: 1rem; background: #fbfdfe; }
+    @media (max-width: 900px) { .contact-pair { grid-template-columns: 1fr; } }
+    @media (max-width: 900px) { .hero-grid, .grid.cols-2, .grid.cols-3, .timeline { grid-template-columns: 1fr; } .toc-list { columns: 1; } nav .wrap { width: 100%; } }
+    @media print { nav { position: static; } .card, table, details { box-shadow:none; } header.hero { color:#000; background:#fff; border-bottom:2px solid #ddd; } a { color:#000; } }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Spring naar inhoud</a>
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Huisartsenpraktijk · protocol</div>
+        <h1>Zorgtraject diabetes</h1>
+        <p class="subtitle">Interactieve, webvriendelijke versie van het praktijkprotocol voor de opvolging van patiënten met diabetes mellitus type 2 binnen het zorgtraject.</p>
+      </div>
+      <aside class="meta-card" aria-label="Documentgegevens">
+        <dl>
+          <div><dt>Doelgroep</dt><dd>Patiënten met diabetes type 2 die voldoen aan de voorwaarden voor het zorgtraject</dd></div>
+          <div><dt>Verantwoordelijke</dt><dd>Laurent</dd></div>
+          <div><dt>Laatste herziening</dt><dd>17/02/2025</dd></div>
+          <div><dt>Volgende herziening</dt><dd>17/02/2025</dd></div>
+        </dl>
+        <p class="meta-action"><a class="button meta-button" href="https://richtlijnen.nhg.org/standaarden/diabetes-mellitus-type-2" target="_blank" rel="noopener noreferrer">Open NHG-richtlijn Diabetes type 2</a></p>
+      </aside>
+    </div>
+  </header>
+
+  <nav aria-label="Hoofdnavigatie">
+    <div class="wrap">
+      <a href="#overzicht">Overzicht</a>
+      <a href="#steekkaart">Steekkaart</a>
+      <a href="#contactmomenten">Contactmomenten</a>
+      <a href="#streefdoelen">Streefdoelen</a>
+      <a href="#projectmanagement">Projectmanagement</a>
+      <a href="#zorgtraject">Zorgtraject</a>
+      <a href="#bronnen">Bronnen</a>
+    </div>
+  </nav>
+
+  <main id="main" class="wrap">
+    <section id="overzicht">
+      <div class="section-title"><span></span><h2>Overzicht</h2></div>
+      <div class="grid cols-3">
+        <article class="card">
+          <h3>Intern zorgteam</h3>
+          <ul class="taglist"><li>Huisarts</li><li>Verpleegkundige</li><li>Diëtist(e)</li><li>Onthaal</li></ul>
+        </article>
+        <article class="card">
+          <h3>Doel van het protocol</h3>
+          <p>Zorgcontinuïteit, interdisciplinair samenwerken en proactieve opvolging van leefstijl en diabetesparameters.</p>
+        </article>
+        <article class="card">
+          <h3>Jaarcyclus</h3>
+          <p>Fysieke kwartaalcontacten in maand 0, 3, 6 en 9, telkens met telefonische opvolging voor laboresultaten en planning.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="steekkaart">
+      <div class="section-title"><span></span><h2>Steekkaart jaarcyclus</h2></div>
+      <div class="table-wrap">
+        <table class="steekkaart-table">
+          <caption>Overzicht per fase van de consultatie</caption>
+          <thead>
+            <tr>
+              <th>Fase</th>
+              <th>Maand 0<br><small>Verpleegkundige</small></th>
+              <th>Maand 3<br><small>Verpleegkundige</small></th>
+              <th>Maand 6<br><small>Verpleegkundige</small></th>
+              <th>Maand 9<br><small>Huisarts</small></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Anamnese</td>
+              <td><ul><li>Leefstijl: voeding en beweging</li><li>Hypo- en hyperglycemie</li><li>Medicatie</li></ul></td>
+              <td><ul><li>Leefstijl: voeding en beweging</li><li>Mentaal welbevinden</li><li>Alcohol</li><li>Medicatie</li></ul></td>
+              <td><ul><li>Leefstijl: voeding en beweging</li><li>Rookgedrag</li><li>Seksueel functioneren</li><li>Medicatie</li></ul></td>
+              <td><ul><li>Leefstijl: voeding en beweging</li><li>Medicatie</li><li>Medische verslagen bespreken</li></ul></td>
+            </tr>
+            <tr>
+              <td>Klinisch onderzoek / actie</td>
+              <td><ul><li>HbA1c en glycemie</li><li>Bloeddruk, gewicht en buikomtrek</li></ul></td>
+              <td><ul><li>HbA1c, glycemie en albumine</li><li>Bloeddruk, gewicht en buikomtrek</li><li>Vaccineer zo nodig</li></ul></td>
+              <td><ul><li>HbA1c, glycemie, lipiden en eGFR</li><li>Bloeddruk, gewicht en buikomtrek</li><li>Voetonderzoek</li></ul></td>
+              <td><ul><li>HbA1c en glycemie</li><li>Bloeddruk, gewicht en buikomtrek</li><li>Rijgeschiktheid vijfjaarlijks</li></ul></td>
+            </tr>
+            <tr>
+              <td>Planning</td>
+              <td><ul><li>Verwijs endocrinoloog</li><li>Herhaalvoorschriften</li><li>Teleconsult inplannen</li><li>Kwartaalcontrole inplannen</li><li>Urinepotje meegeven</li></ul></td>
+              <td><ul><li>Verslag endocrinoloog bespreken</li><li>Vaccinatiestatus</li><li>Herhaalvoorschriften</li><li>Teleconsult inplannen</li><li>Kwartaalcontrole inplannen</li></ul></td>
+              <td><ul><li>Herhaalvoorschriften</li><li>Verwijzing podoloog of specialist</li><li>Teleconsult inplannen</li><li>Kwartaalcontrole inplannen</li></ul></td>
+              <td><ul><li>Herhaalvoorschriften</li><li>Attesten verlengen zo nodig</li><li>Teleconsult inplannen</li><li>Kwartaalcontrole inplannen</li></ul></td>
+            </tr>
+            <tr>
+              <td>Telefonisch opvolgcontact</td>
+              <td><ul><li>Labo bespreken</li><li>Zorgplan aanpassen zo nodig</li><li>Afspraken herhalen</li></ul></td>
+              <td><ul><li>Labo bespreken</li><li>Zorgplan aanpassen zo nodig</li><li>Afspraken herhalen</li></ul></td>
+              <td><ul><li>Labo bespreken</li><li>Zorgplan aanpassen zo nodig</li><li>Afspraken herhalen</li></ul></td>
+              <td><ul><li>Labo bespreken</li><li>Zorgplan aanpassen zo nodig</li><li>Afspraken herhalen</li></ul></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="contactmomenten">
+      <div class="section-title"><span></span><h2>Contactmomenten</h2></div>
+
+      <details open>
+        <summary>Maand 0 · Contactmoment 1 · fysiek + telefonisch</summary>
+        <div class="detail-body contact-pair">
+          <div class="subcard"><h3>1-A · Fysieke consultatie · verpleegkundige</h3><h4>Anamnese</h4><ul class="checks"><li>Bevraag leefstijl van de laatste 3 maanden: voeding en beweging.</li><li>Educatie symptomen hypo- en hyperglycemie.</li><li>Overloop medicatie.</li><li>Pols naar verwachtingen laboresultaat.</li></ul><h4>Klinisch onderzoek en planning</h4><ul class="checks"><li>Labo: HbA1c en nuchtere glycemie.</li><li>Bloeddruk, gewicht en buikomtrek.</li><li>Bespreek bloeddruk, gewicht en doelstellingen.</li><li>Jaarlijkse verwijzing naar endocrinoloog.</li><li>Herhaalvoorschriften, telefonische consultatie, kwartaalcontrole en urinepotje met instructie.</li></ul></div>
+          <div class="subcard"><h3>1-B · Telefonische consultatie</h3><ul class="checks"><li>Meedelen labo-waarden.</li><li>Bij afwijkende resultaten: polsen of de patiënt een idee heeft van de oorzaak.</li><li>Vragen of er al een afspraak is bij de endocrinoloog.</li><li>Zo nodig zorgplan aanpassen.</li><li>Datum en verwachtingen voor de volgende afspraak herhalen.</li></ul></div>
+        </div>
+      </details>
+
+      <details>
+        <summary>Maand 3 · Contactmoment 2 · fysiek + telefonisch</summary>
+        <div class="detail-body contact-pair">
+          <div class="subcard"><h3>2-A · Fysieke consultatie · verpleegkundige</h3><h4>Anamnese</h4><ul class="checks"><li>Bevraag leefstijl van de laatste 3 maanden.</li><li>Bevraag mentaal welbevinden.</li><li>Bespreek alcoholgebruik.</li><li>Overloop medicatie.</li><li>Pols naar verwachtingen laboresultaat.</li></ul><h4>Onderzoek, bespreking en planning</h4><ul class="checks"><li>Labo: HbA1c, nuchtere glycemie en micro-albuminurie.</li><li>Bloeddruk, gewicht en buikomtrek.</li><li>Bespreek verslag endocrinoloog.</li><li>Controleer vaccinatiestatus en vaccineer zo nodig.</li><li>Bespreek bloeddruk, gewicht en doelstellingen.</li><li>Verwijzing diëtist zo nodig, herhaalvoorschriften, telefonische consultatie en kwartaalcontrole.</li></ul></div>
+          <div class="subcard"><h3>2-B · Telefonische consultatie</h3><ul class="checks"><li>Meedelen labo-waarden.</li><li>Bij afwijkende resultaten: polsen naar mogelijke oorzaak.</li><li>Zo nodig aanpassingen aan het zorgplan bespreken.</li><li>Datum en verwachtingen voor de volgende afspraak herhalen.</li></ul></div>
+        </div>
+      </details>
+
+      <details>
+        <summary>Maand 6 · Contactmoment 3 · fysiek + telefonisch</summary>
+        <div class="detail-body contact-pair">
+          <div class="subcard"><h3>3-A · Fysieke consultatie · verpleegkundige</h3><h4>Anamnese</h4><ul class="checks"><li>Bevraag leefstijl van de laatste 3 maanden.</li><li>Bespreek rookgedrag.</li><li>Bevraag seksuele klachten.</li><li>Overloop medicatie.</li><li>Pols naar verwachtingen laboresultaat.</li></ul><h4>Onderzoek, bespreking en planning</h4><ul class="checks"><li>Labo: HbA1c, nuchtere glycemie, lipiden en eGFR.</li><li>Bloeddruk, gewicht, buikomtrek en voetonderzoek.</li><li>Bespreek bloeddruk, gewicht en doelstellingen.</li><li>Telefonische consultatie en herhaalvoorschriften.</li><li>Verwijzing naar podoloog of specialist zo nodig.</li><li>Volgende kwartaalcontrole bij de huisarts.</li></ul></div>
+          <div class="subcard"><h3>3-B · Telefonische consultatie</h3><ul class="checks"><li>Meedelen labo-waarden.</li><li>Bij afwijkende resultaten: polsen naar mogelijke oorzaak.</li><li>Vragen of er al een afspraak is bij oftalmoloog en specialist/podoloog zo nodig.</li><li>Zo nodig zorgplan aanpassen.</li><li>Datum en verwachtingen voor de volgende afspraak herhalen.</li></ul></div>
+        </div>
+      </details>
+
+      <details>
+        <summary>Maand 9 · Contactmoment 4 · fysiek + telefonisch</summary>
+        <div class="detail-body contact-pair">
+          <div class="subcard"><h3>4-A · Fysieke consultatie · huisarts</h3><h4>Anamnese</h4><ul class="checks"><li>Bevraag leefstijl van de laatste 3 maanden.</li><li>Overloop medicatie.</li><li>Pols naar verwachtingen laboresultaat.</li></ul><h4>Onderzoek, bespreking en planning</h4><ul class="checks"><li>Labo: HbA1c en nuchtere glycemie.</li><li>Bloeddruk, gewicht en buikomtrek.</li><li>Rijgeschiktheid vijfjaarlijks.</li><li>Bespreek bloeddruk, gewicht en doelstellingen.</li><li>Bespreek medische verslagen.</li><li>Telefonische consultatie, herhaalvoorschriften, attesten zo nodig en volgende kwartaalcontrole bij de verpleegkundige.</li></ul></div>
+          <div class="subcard"><h3>4-B · Telefonische consultatie</h3><ul class="checks"><li>Meedelen labo-waarden.</li><li>Bij afwijkende resultaten: polsen naar mogelijke oorzaak.</li><li>Zo nodig aanpassingen aan het zorgplan bespreken.</li><li>Datum en verwachtingen voor de volgende afspraak herhalen.</li></ul></div>
+        </div>
+      </details>
+
+      <p class="note"><strong>Aandachtspunt:</strong> herhaalvoorschriften gaan via een taak naar de vaste huisarts. Zo nodig volgt overleg tussen huisarts en verpleegkundige. De huisarts maakt digitale voorschriften binnen 48 uur of verwittigt de patiënt bij wijziging. Volgende contactmomenten worden ingepland door zorgverlener of onthaalmedewerker.</p>
+    </section>
+
+    <section id="streefdoelen">
+      <div class="section-title"><span></span><h2>Populatie-streefdoelen</h2></div>
+      <p class="note">Deze waarden zijn bedoeld als populatiekader. Op patiëntniveau moet de persoonlijke doelstelling van de patiënt mee in rekening worden gebracht.</p>
+      <table>
+        <caption>Lichamelijke en labo-parameters</caption>
+        <thead><tr><th>Parameter</th><th>Streefdoel</th><th>Oranje vlag</th><th>Rode vlag</th><th>Bron/procedure</th></tr></thead>
+        <tbody>
+          <tr><td>Bloeddruk</td><td class="goal">SBP 120-129 mmHg<br>DBP &lt; 85 mmHg</td><td class="orange">SBP 130-139<br>DBP 86-89</td><td class="red">SBP &gt; 140<br>DBP &gt; 90</td><td>2024 ESC Guidelines for elevated blood pressure and hypertension</td></tr>
+          <tr><td>BMI</td><td class="goal">18-25</td><td class="orange"></td><td class="red"></td><td></td></tr>
+          <tr><td>Buikomtrek</td><td class="goal">Vrouw: 80-88<br>Man: 94-102</td><td class="orange"></td><td class="red"></td><td></td></tr>
+          <tr><td>HbA1c</td><td class="goal">6,5% als &lt;65 jaar of denovo<br>7% als &gt;65 jaar of geen nieuwe diagnose<br>7,5% als 65+ en 1 of 2 comorbiditeiten<br>8% als 65+ en 3 comorbiditeiten en/of MCI of 2 IADL-beperkingen<br>8,5% als 65+ en palliatief, dementie, 2 ADL-beperkingen of WZC</td><td class="orange">+ 0,5%</td><td class="red">&gt; + 1%</td><td>Formularium Ouderenzorg</td></tr>
+          <tr><td>LDL</td><td class="goal">&lt;55 mg/dl bij CVR very high risk<br>&lt;70 mg/dl bij CVR high risk<br>&lt;100 mg/dl bij CVR moderate risk</td><td class="orange"></td><td class="red"></td><td>ehad192.pdf</td></tr>
+          <tr><td>eGFR</td><td class="goal">Afhankelijk van comorbiditeiten</td><td class="orange">Daling van 5/jaar of 10/5 jaar</td><td class="red"></td><td></td></tr>
+          <tr><td>Albumine in urine</td><td class="goal">Vrouw: &gt;20 mg/gr creatinine<br>Man: &gt;30 mg/gr creatinine</td><td class="orange"></td><td class="red"></td><td></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="projectmanagement">
+      <details>
+        <summary class="section-summary"><span></span><h2>Projectmanagement</h2></summary>
+        <div class="detail-body">
+          <div class="grid cols-2">
+            <article class="card"><h3>Noodzaak</h3><p>Diabetes mellitus type 2 vraagt uitgebreide zorgopvolging, kwalitatieve zorgcontinuïteit en duidelijke afspraken tussen betrokken zorgverleners.</p></article>
+            <article class="card"><h3>Doelstellingen</h3><ul class="checks"><li>Zorg verlenen in overeenstemming met richtlijnen.</li><li>Leefstijl proactief bespreken en opvolgen.</li><li>Diabetesparameters proactief opvolgen.</li><li>Diabeteszorg interdisciplinair organiseren.</li></ul></article>
+          </div>
+
+          <h3>Doelgroep en inclusie</h3>
+          <div class="grid cols-2">
+            <article class="card"><h4>Doelgroep</h4><p>Patiënten met de diagnose diabetes mellitus type II die voldoen aan de voorwaarden voor het zorgtraject.</p><p><strong>Aantal in voorbeeldpopulatie:</strong> 378</p></article>
+            <article class="card"><h4>Inclusie in het protocol</h4><ol><li>Vaststelling door externe zorgverlener, waarna consultatie met de huisarts.</li><li>Vaststelling door de huisarts.</li><li>Vaststelling door de verpleegkundige, bijvoorbeeld door progressie in het opstarttraject. De noodzaak van een consultatie bij de huisarts wordt in overleg bepaald.</li></ol></article>
+          </div>
+
+          <h3>Visie op rolbeschrijving</h3>
+          <p>Interdisciplinair samenwerken betekent gelijkwaardigheid tussen disciplines, waarbij zorgprofessionals autonoom mogen handelen binnen de grenzen van hun bevoegdheden en bekwaamheden.</p>
+          <table>
+            <thead><tr><th>Discipline</th><th>Rol en verantwoordelijkheden</th></tr></thead>
+            <tbody>
+              <tr><td>Huisarts</td><td>Superviserend en adviserend waar nodig; evalueert complexiteit van de casus; eindverantwoordelijke voor de farmacologische therapie.</td></tr>
+              <tr><td>Verpleegkundige</td><td>Coördinerende rol; evalueert de patiënt holistisch; verantwoordelijk voor de niet-farmacologische therapie.</td></tr>
+              <tr><td>Onthaal</td><td>Triërende rol; ondersteunt zorgcontinuïteit door patiënten te informeren over hun zorgpad en afspraken in te plannen.</td></tr>
+              <tr><td>Diëtist(e)</td><td>Ondersteunende rol via advies; kan de populatie proactief screenen en verbeterprojecten opzetten.</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Procesevaluatie</h3>
+          <p>Procesindicatoren helpen om te evalueren of het protocol de beoogde doelstellingen bereikt.</p>
+          <table class="process">
+            <thead><tr><th>Indicator</th><th>Streefdoel</th><th>Basismeting</th><th>Resultaat</th><th>Opmerkingen</th></tr></thead>
+            <tbody>
+              <tr><td>% pt. met minstens 2 HbA1c-metingen/jaar</td><td>75%</td><td>65%</td><td></td><td></td></tr>
+              <tr><td>% pt. met minstens 1 urineonderzoek/jaar</td><td>75%</td><td>73%</td><td></td><td></td></tr>
+              <tr><td>% pt. met minstens 2 bloeddrukmetingen/jaar</td><td>75%</td><td>87%</td><td></td><td></td></tr>
+              <tr><td>% pt. &lt;65 jaar en HbA1c &lt;7%</td><td>75%</td><td>62%</td><td></td><td></td></tr>
+              <tr><td>% pt. met verslag endocrinoloog &lt;1 jaar geleden</td><td>75%</td><td>66%</td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </section>
+
+    <section id="zorgtraject">
+      <details>
+        <summary class="section-summary"><span></span><h2>Regionale zorgplannen/zorgsystemen</h2></summary>
+        <div class="detail-body">
+          <div class="grid cols-2">
+            <article class="card"><h3>Voor wie?</h3><p>Diagnose diabetes mellitus type II, met behandeling met GLP-1-analoog, 1 of 2 insuline-injecties per dag of maximale orale diabetesmedicatie, en een GMD waarin BMI, BD, HbA1c en LDL-C geregistreerd worden.</p></article>
+            <article class="card"><h3>Hoe aanvragen?</h3><p>Contract ondertekend door huisarts, endocrinoloog en patiënt. De patiënt bezorgt dit contract aan de mutualiteit. Het traject wordt jaarlijks automatisch verlengd zolang de voorwaarden voldaan blijven.</p></article>
+            <article class="card"><h3>Verplichtingen patiënt</h3><ul class="checks"><li>Jaarlijkse controle bij de endocrinoloog.</li><li>Minstens 2 keer per jaar naar de huisarts.</li></ul></article>
+            <article class="card"><h3>Recht op begeleiding</h3><ul class="checks"><li>5 educatiesessies/jaar door een diabeteseducator.</li><li>5 extra educatiesessies in het opstartjaar of daaropvolgende kalenderjaar.</li><li>2 x 30 min/jaar bij erkend diëtist.</li><li>2 x 45 min/jaar bij erkend podoloog bij verhoogd voetrisico.</li><li>1/jaar preventieve mondzorg.</li></ul></article>
+          </div>
+          <article class="card"><h3>Zelfcontrolemateriaal</h3><p>Bij behandeling met inspuiting of GLP-1-analoog: bloedglucosemeter per 3 jaar, 150 strips per 6 maanden en 100 lancetten per 6 maanden.</p></article>
+        </div>
+      </details>
+    </section>
+
+    <section id="bronnen">
+      <details>
+        <summary class="section-summary"><span></span><h2>Bronnen en logboek</h2></summary>
+        <div class="detail-body">
+          <div class="grid cols-2">
+            <article class="card">
+              <h3>Bronnen in protocol</h3>
+              <ul class="checks">
+                <li>BCFI: Formularium Ouderenzorg — HbA1c-streefwaarden.</li>
+                <li>ESC — lipidenstreefwaarden.</li>
+                <li>NHG Diabetes mellitus type 2 — varia.</li>
+                <li>Domus Medica Diabetes Mellitus Type 2 — varia.</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Logboek</h3>
+              <ul class="checks">
+                <li>17/02/2025: nieuwe figuur diabeteslandschap toegevoegd; proces-streefdoelen toegevoegd.</li>
+                <li>18/01/2024: telefonische contactmomenten toegevoegd.</li>
+                <li>06/02/2023: update streefwaarden HbA1c volgens ouderenformularium.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">Gebaseerd op het aangeleverde Word-protocol. Controleer medische inhoud en lokale afspraken vóór publicatie of gebruik in de praktijk.</div>
+  </footer>
+</body>
+</html>
