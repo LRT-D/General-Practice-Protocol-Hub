@@ -1,9 +1,6 @@
 <!doctype html>
 <html lang="nl">
 <head>
-    <script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
-    <script src="https://files.bpcontent.cloud/2026/06/15/09/20260615095016-H1PGE6UF.js" defer></script>
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Protocol: zorgtraject diabetes</title>
@@ -40,6 +37,18 @@
     .hero-actions { margin-top: 1.4rem; display: flex; flex-wrap: wrap; gap: .75rem; }
     .hub-button { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.65); color: #fff; }
     .hub-button:hover, .hub-button:focus { background: #fff; color: #0e5c75; }
+    .floating-hub-button {
+      position: fixed;
+      left: 1rem;
+      bottom: 1rem;
+      z-index: 100;
+      box-shadow: 0 14px 30px rgba(17, 24, 39, .22);
+      background: var(--brand);
+      border-color: var(--brand);
+      color: #fff;
+    }
+    .floating-hub-button:hover,
+    .floating-hub-button:focus { background: #0b5265; color: #fff; }
     .meta-card { position: relative; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.24); border-radius: 1.25rem; padding: 1.25rem; backdrop-filter: blur(10px); }
     .meta-card dl { margin: 0; display: grid; gap: .75rem; }
     .meta-card dt { font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: #c7edf6; }
@@ -109,6 +118,7 @@
   </style>
 </head>
 <body>
+  <a class="button floating-hub-button" href="https://lrt-d.github.io/General-Practice-Protocol-Hub/">← Terug naar protocol-hub</a>
   <a class="skip" href="#main">Spring naar inhoud</a>
   <header class="hero">
     <div class="wrap hero-grid">
@@ -116,7 +126,6 @@
         <div class="eyebrow">Huisartsenpraktijk · protocol</div>
         <h1>Zorgtraject diabetes</h1>
         <p class="subtitle">Interactieve, webvriendelijke versie van het praktijkprotocol voor de opvolging van patiënten met diabetes mellitus type 2 binnen het zorgtraject.</p>
-        <p class="hero-actions"><a class="button hub-button" href="https://lrt-d.github.io/General-Practice-Protocol-Hub/">← Terug naar protocol-hub</a></p>
       </div>
       <aside class="meta-card" aria-label="Documentgegevens">
         <dl>
